@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.KLineDataMapper">
+    
+    <resultMap type="KLineData" id="KLineDataResult">
+        <result property="id"    column="id"    />
+        <result property="data1"    column="data1"    />
+        <result property="data2"    column="data2"    />
+        <result property="data3"    column="data3"    />
+        <result property="data4"    column="data4"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectKLineDataVo">
+        select id, data1, data2, data3, data4, create_by, create_time, update_by, update_time, remark from k_line_data
+    </sql>
+
+    <select id="selectKLineDataList" parameterType="KLineData" resultMap="KLineDataResult">
+        <include refid="selectKLineDataVo"/>
+        <where>  
+            <if test="data1 != null "> and data1 = #{data1}</if>
+            <if test="data2 != null "> and data2 = #{data2}</if>
+            <if test="data3 != null "> and data3 = #{data3}</if>
+            <if test="data4 != null "> and data4 = #{data4}</if>
+            <if test="createTime != null"> and DATE_FORMAT(create_time,'%Y%m%d') = DATE_FORMAT(#{createTime},'%Y%m%d')</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+        order by create_time
+    </select>
+    
+    <select id="selectKLineDataById" parameterType="Integer" resultMap="KLineDataResult">
+        <include refid="selectKLineDataVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertKLineData" parameterType="KLineData" useGeneratedKeys="true" keyProperty="id">
+        insert into k_line_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="data1 != null">data1,</if>
+            <if test="data2 != null">data2,</if>
+            <if test="data3 != null">data3,</if>
+            <if test="data4 != null">data4,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="data1 != null">#{data1},</if>
+            <if test="data2 != null">#{data2},</if>
+            <if test="data3 != null">#{data3},</if>
+            <if test="data4 != null">#{data4},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateKLineData" parameterType="KLineData">
+        update k_line_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="data1 != null">data1 = #{data1},</if>
+            <if test="data2 != null">data2 = #{data2},</if>
+            <if test="data3 != null">data3 = #{data3},</if>
+            <if test="data4 != null">data4 = #{data4},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteKLineDataById" parameterType="Integer">
+        delete from k_line_data where id = #{id}
+    </delete>
+
+    <delete id="deleteKLineDataByIds" parameterType="String">
+        delete from k_line_data where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
