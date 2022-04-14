@@ -2,20 +2,29 @@ package com.ruoyi.web.controller.system;
 
 
 import org.apache.commons.lang3.text.WordUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+@Component
 public class test1 {
 
-    public static void testTestWord() throws FileNotFoundException {
+    @Value("${ruoyi.profile}")
+    private  String tempath;
+    @PostConstruct
+    public  void testTestWord() throws FileNotFoundException {
         WordUtils wordUtils = new WordUtils();
         //String templatePath = test1.class.getResource("").getPath()+"\\123456.doc";
-        String templatePath = "F:\\xm\\qihuo\\ruoyi-admin\\src\\main\\java\\com\\ruoyi\\web\\controller\\system\\123456.doc";
+        //String templatePath = "F:\\xm\\qihuo\\ruoyi-admin\\tem\\123456.doc";
+        System.out.println(tempath);
+        String templatePath = tempath+"\\123456.doc";
         Map<String, Object> map_data = new HashMap<>();
         map_data.put("project_id", "2019.21");
         map_data.put("project_name", "ZJIC");
@@ -42,10 +51,8 @@ public class test1 {
         Daochu.Export2GeotechnicalLayeringTable(map_data, list_data, templatePath, out);
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public void main(String[] args) throws FileNotFoundException {
         //String filePath = test1.class.getResource("").getPath();
-
-        //System.out.println("filePath: " + filePath);
-        testTestWord();
+        this.testTestWord();
     }
 }

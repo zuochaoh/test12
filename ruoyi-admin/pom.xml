@@ -68,9 +68,15 @@
         </dependency>
 
         <!--Word操作-->
+        <dependency>
+            <groupId>com.deepoove</groupId>
+            <artifactId>poi-tl</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <!--<dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
+            <version>4.1.2</version>
         </dependency>-->
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -94,6 +100,7 @@
             <!--项目根目录下的lib文件夹下-->
             <systemPath>${basedir}/lib/spire.doc.free-3.9.0.jar</systemPath>
         </dependency>
+
 
     </dependencies>
 

@@ -140,3 +140,6 @@ xss:
 swagger:
   # 是否开启swagger
   enabled: true
+template:
+  path:F:\xm\qihuo
+

@@ -18,10 +18,12 @@ public class GetTable {
     public static void main(String[] args)throws IOException {
         //加载Word测试文档
         Document doc = new Document();
-        doc.loadFromFile("C:\\Users\\xuxh\\Desktop\\123.doc");
+        doc.loadFromFile("C:\\Users\\xuxh\\Desktop\\123.docx");
 
         //获取第一节
         Section section = doc.getSections().get(0);
+
+        String text = section.getParagraphs().get(0).getText();
 
         //获取第一个表格
         ITable table = section.getTables().get(0);
@@ -36,7 +38,7 @@ public class GetTable {
         textfile.createNewFile();
         FileWriter fw = new FileWriter(textfile, true);
         BufferedWriter bw = new BufferedWriter(fw);
-
+        bw.write(text + "\t");//获取文本内容
         //创建List
         List images = new ArrayList();
 
